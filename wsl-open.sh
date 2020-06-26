@@ -185,7 +185,9 @@ done
 shift $(( OPTIND - 1 ))
 
 # Open file
-File=$1
+# In case that $1 is in pattern: file:///path/to/file, 
+# file:// should be stripped to make following work properly
+File=$(echo $1|sed -r "s/^[F,f][I,i][L,l][E,e]:\/\///")
 if [[ -n $File ]]; then
   if [[ -e $File ]]; then
     # File or directory
